@@ -1,6 +1,7 @@
 const express=require("express");
 const mongoose=require("mongoose");
 const routes=require("./routes/routes");
+const cors=require("cors");
 const app=express();
 require("dotenv").config();
 app.use(cors({
@@ -8,6 +9,7 @@ app.use(cors({
     methods:["GET","POST"]
 }));
 app.use(express.json());
+app.use("/",routes);
 mongoose.connect(process.env.MONGO_URI)
 .then(()=> console.log("mogoose connected"))
 .catch(err=>console.log(err));

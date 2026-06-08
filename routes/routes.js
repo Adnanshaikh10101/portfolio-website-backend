@@ -1,9 +1,11 @@
 const express=require("express");
-const {resend} = require("resend");
+const { Resend } = require("resend");
+require("dotenv").config();
+const resend = new Resend(process.env.RESEND_API_KEY);
 const router=express.Router();
 const Contact=require("../models/Contact");
 const app=express();
-app.post("/contact",async (req,res) =>{
+router.post("/contact",async (req,res) =>{
     try{
         const {name,email,msg}=req.body;
         const newmsg=new Contact({name,email,msg});
@@ -11,12 +13,12 @@ app.post("/contact",async (req,res) =>{
 
         await resend.emails.send({
             from:"onboarding@resend.dev",
-            to:"process.env.EMAIL",
+            to: process.env.EMAIL ,
             subject :"New Query",
-            Text:`Name : ${name}\n Email : ${email}\n Message : ${msg}`,
+            Text:`Name : ${name}\nEmail : ${email}\nMessage : ${msg}`,
             reply_to:email
         });
-        console.log("Email send tHrough resend");
+        console.log("Email send through resend");
         res.status(200).json({msg:"success"});
     }
     catch(err){
