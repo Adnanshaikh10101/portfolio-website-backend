@@ -15,7 +15,7 @@ router.post("/contact",async (req,res) =>{
             from:"onboarding@resend.dev",
             to: process.env.EMAIL ,
             subject :"New Query",
-            Text:`Name : ${name}\nEmail : ${email}\nMessage : ${msg}`,
+            text:`Name : ${name}\nEmail : ${email}\nMessage : ${msg}`,
             reply_to:email
         });
         console.log("Email send through resend");
